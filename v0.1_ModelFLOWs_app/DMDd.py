@@ -248,7 +248,26 @@ def hodmd(V,d,t,esvd,edmd):
     Ua,sa,Wa=np.linalg.svd(A,full_matrices=False) #(n*J)*N, N*N, N*N
     a=Wa.conj().T@np.diag(sa**-1)@Ua.conj().T@b #N
     
-#    print(eigval)
+    print(eigval)
+    np.savetxt(eigval,'eigVal.txt')
+
+    #Plot the real vs. imaginary part of the eigen values
+    # Set font properties
+    plt.rc('font', family='serif', size=11)
+
+    # Your data and plot
+    plt.figure(figsize=(6, 6))
+    plt.scatter(np.real(eigenvalues), np.imag(eigenvalues), color='blue', marker='o', label='Eigenvalues')
+    plt.xlabel('Real')
+    plt.ylabel('Imaginary')
+    plt.title('Eigenvalues')
+    plt.axhline(0, color='black', linewidth=0.5)
+    plt.axvline(0, color='black', linewidth=0.5)
+    plt.grid(color='gray', linestyle='--', linewidth=0.5)
+    plt.legend()
+    plt.tight_layout()
+    plt.savefig('Eigenval_NP.pdf')
+    plt.show()
     #Modes
     uvir=Uvir@np.diag(a) #n*N
     u=U@uvir #I*N
