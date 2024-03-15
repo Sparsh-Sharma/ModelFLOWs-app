@@ -266,7 +266,28 @@ def hodmd(V,d,t,esvd,edmd):
     plt.grid(color='gray', linestyle='--', linewidth=0.5)
     plt.legend()
     plt.tight_layout()
-    plt.savefig('Eigenval_NP.pdf')
+    plt.savefig('Eigenval.pdf')
+    plt.show()
+
+    #plot eigen values but coloured by amplitudes
+    # Normalize the amplitudes to use them as colors
+    amplitudes = areal
+    max_amplitude = max(areal)
+    min_amplitude = min(areal)
+    normalized_amplitudes = [(amp - min_amplitude) / (max_amplitude - min_amplitude) for amp in amplitudes]
+
+    plt.figure(figsize=(7, 6))
+    plt.scatter(np.real(eigenvalues), np.imag(eigenvalues), c=amplitudes, cmap='viridis', marker='o', label='Eigenvalues')
+    plt.xlabel('Real')
+    plt.ylabel('Imaginary')
+    plt.title('Eigenvalues')
+    plt.axhline(0, color='black', linewidth=0.5)
+    plt.axvline(0, color='black', linewidth=0.5)
+    plt.colorbar(label='Amplitude')
+    plt.grid(color='gray', linestyle='--', linewidth=0.5)
+    plt.legend()
+    plt.tight_layout()
+    plt.savefig('Eigenval_colored.pdf')
     plt.show()
     #Modes
     uvir=Uvir@np.diag(a) #n*N
